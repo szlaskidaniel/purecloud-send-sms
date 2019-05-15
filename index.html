@@ -48,7 +48,15 @@
         let queueId = getUrlVars()["queueId"];
         let phoneNumber = getUrlVars()["phoneNumber"];
         
-         
+        // Fix PhoneNumber. In case it is tel: at the begining.
+        if (phoneNumber && phoneNumber.length > 5) {
+            if (phoneNumber.substring(0,4) == 'tel:') {
+                phoneNumber = phoneNumber.substring(4)
+              
+            } 
+        }
+
+
         $("#send").click(() => {
             // Get user' s name sendSMS().then(()=> {
             // Display the card with the user's name
