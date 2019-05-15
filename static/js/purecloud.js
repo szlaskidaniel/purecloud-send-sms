@@ -1,30 +1,28 @@
 // **** Token Implicit Grant (Browser) - UserLogin ****
-const clientId = '6028cbef-64ec-4857-aa98-4f04360f83b0'; //  PureCloud-poland
-const redirectUri = 'https://localhost/index.html';
-const environment = 'mypurecloud.ie';
-
+let redirectUri = 'https://szlaskidaniel.github.io/purecloud-send-sms/index.html';
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance
 client.setPersistSettings(true);
 
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+let clientId = getUrlVars()["clientId"];
+let environment = getUrlVars()["environment"];
+
 // Set Environment (in case page reloaded)
 client.setEnvironment(environment);
-let usersApi = new platformClient.UsersApi();
 let apiInstance = new platformClient.ConversationsApi();
 
-/*
-const _token = client.authentications["PureCloud Auth"].accessToken;
 
-if (_token) {
-    // do Authenticated stuff here
-    console.log(_token);
-
-} else {
-    // token not available - SignIn first
-    //signIn();
-    alert('no token')
-}
-*/
 
 // Authenticate
 client.loginImplicitGrant(clientId, redirectUri)
@@ -39,24 +37,6 @@ client.loginImplicitGrant(clientId, redirectUri)
 
 
 //#endregion
-
-
-
-function getANINumber(conversationId) {
-    return new Promise(function (resolve, reject) {
-        //resolve('+48509593723');
-        apiInstance.getConversation(conversationId)
-            .then((data) => {
-                console.log(`getConversation success! data: ${JSON.stringify(data, null, 2)}`);
-                resolve()
-            })
-            .catch((err) => {
-                console.log('There was a failure calling getConversation');
-                console.error(err);
-            });
-
-    });
-}
 
 
 
@@ -136,7 +116,6 @@ function postConversationsMessageCommunicationMessage(conversationId, communicat
 
 }
 
-
 function postConversationDisconnect(conversationId) {
     console.log('postConversationDisconnect')
     return new Promise(function (resolve, reject) {
@@ -158,7 +137,6 @@ function postConversationDisconnect(conversationId) {
     });
 
 }
-
 
 function sendSMS(conversationId, queueId, phoneNumber, body) {
     console.log('sendSMS function');
