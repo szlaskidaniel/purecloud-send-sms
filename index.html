@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/node_modules/jquery-toast-plugin/dist/jquery.toast.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <title>Genesys PureCloud SendSMS Functionality</title>
+
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/41.0.0/purecloud-platform-client-v2.min.js"></script>
+    <script src="/node_modules/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+    <script src="/static/js/purecloud.js"></script>
+    <script src="/static/js/notifications.js"></script>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button type="button" id="send" class="btn btn-info"><i class="fas fa-sync-alt"></i> Send SMS</button>
+        </div>
+        <input type="text" id="txtMessage" class="form-control" placeholder="message body"></input>
+    </div>
+
+
+
+
+    <script>
+
+        // Read a page's GET URL variables and return them as an associative array.
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        let conversationId = getUrlVars()["conversationId"];
+        let queueId = getUrlVars()["queueId"];
+        //let phoneNumber = getUrlVars()["phoneNumber"];
+        let phoneNumber = '+48509593723';
+
+
+
+        $("#send").click(() => {
+            // Get user' s name sendSMS().then(()=> {
+            // Display the card with the user's name
+            let body = $("#txtMessage").val();
+            if (!body) {
+                showMessage('You need to fill message body first', true);
+                //alert('You need to fill message body first');
+            } else if (!phoneNumber) {
+                showMessage('Phone number not present', true);
+                //alert('Phone number not present');
+            } else {
+                sendSMS(conversationId, queueId, phoneNumber, body).then(async (requests) => {
+                    console.log('message sent');
+                    showMessage('Message sent', false);
+                }).catch((err) => {
+                    console.error("Failed send SMS");
+                    showMessage(err, true);
+                });
+            }
+
+        });
+
+
+    </script>
+
+</body>
+
+</html>
