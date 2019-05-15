@@ -1,5 +1,5 @@
 // **** Token Implicit Grant (Browser) - UserLogin ****
-let redirectUri = 'https://localhost/index.html';
+let redirectUri = 'https://szlaskidaniel.github.io/purecloud-send-sms/index.html';
 const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance
 client.setPersistSettings(true);
