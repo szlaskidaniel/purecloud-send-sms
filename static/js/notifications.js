@@ -9,7 +9,7 @@ function showMessage(message, error = false) {
     $.toast({
       heading: "Success",
       text: message,
-      position: "top-right",
+      position: "bottom-center",
       icon: "success",
       hideAfter: 8000,
       stack: 1
@@ -18,7 +18,7 @@ function showMessage(message, error = false) {
     $.toast({
       heading: "Error",
       text: message,
-      position: "top-right",
+      position: "bottom-center",
       icon: "error",
       hideAfter: 8000,
       stack: 1

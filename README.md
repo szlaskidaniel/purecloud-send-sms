@@ -12,3 +12,5 @@ Follow below steps to enable this functionality in your org
 * Remember to replace `{{OauthClientId}}` to your `clientId` and `{{env}}` to your environment (mypurecloud.ie / mypurecloud.com)
 * It's good that width of the image takes 100% of the window (notification messages) and heigh should be at least 200px.
 
+### Temp solution, example link:
+https://szlaskidaniel.github.io/purecloud-send-sms/index.html?conversationId=123&queueId=123&phoneNumber=+48509&clientId=6028cbef-64ec-4857-aa98-4f04360f83b0&environment=mypurecloud.ie
